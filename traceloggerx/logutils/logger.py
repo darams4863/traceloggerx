@@ -10,12 +10,12 @@ ROOT_PKG = "default"
 
 class ContextualLoggerAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
-        context = self.extra.copy()
+        context = self.extra.copy() if self.extra else {}
         context.update(kwargs.pop("extra", {}))
         kwargs["extra"] = context
         return msg, kwargs
 
-def set_logger(pkg: str, log_dir: str = "./logs", level: str = None, stream_only=False, json_format=False, extra=None):
+def set_logger(pkg: str, log_dir: str = "./logs", level: str | None = None, stream_only=False, json_format=False, extra: dict | None = None):
     logger = logging.getLogger(pkg)
     level = level or os.getenv("LOG_LEVEL", "INFO")
     logger.setLevel(level)
