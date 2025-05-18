@@ -1,4 +1,4 @@
-from logutils.logger import set_logger
+from traceloggerx import set_logger
 
 # Logger with default user_id
 logger = set_logger("user-session", extra={"user_id": "user_123"})

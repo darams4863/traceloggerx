@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 
-from logutils.logger import set_logger
+from traceloggerx import set_logger
 
 logger = set_logger("fastapi-example")
 

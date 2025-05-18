@@ -1,4 +1,4 @@
-from logutils.logger import set_logger
+from traceloggerx import set_logger
 
 # Basic logger without trace or user info
 logger = set_logger("basic")
