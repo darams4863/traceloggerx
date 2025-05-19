@@ -2,6 +2,9 @@
 name = "traceloggerx"
 version = "0.1.4"
 description = "Structured JSON logger with trace_id, user_id and colored console output."
+dependencies = [
+    "colorlog"
+]
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [
