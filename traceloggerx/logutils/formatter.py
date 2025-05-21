@@ -17,6 +17,9 @@ class CustomColoredFormatter(ColoredFormatter):
         return super().format(record)
 
 class JSONFormatter(logging.Formatter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def format(self, record):
         log_record = {
             "timestamp": self.formatTime(record, self.datefmt),
@@ -27,8 +30,12 @@ class JSONFormatter(logging.Formatter):
             "funcName": record.funcName,
             "lineNo": record.lineno,
             "process": record.process,
-            "thread": record.threadName
+            "thread": record.threadName,
         }
+        for key, value in record.__dict__.items():
+            if key not in log_record and not key.startswith('_'):
+                log_record[key] = value
+
         if record.exc_info:
             log_record["exception"] = self.formatException(record.exc_info)
         return json.dumps(log_record, ensure_ascii=False)
