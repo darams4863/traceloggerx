@@ -1,6 +1,6 @@
 [project]
 name = "traceloggerx"
-version = "0.1.7"
+version = "0.1.8"
 description = "Structured JSON logger with trace_id, user_id and colored console output."
 dependencies = [
     "colorlog"

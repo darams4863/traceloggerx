@@ -16,6 +16,23 @@ class CustomColoredFormatter(ColoredFormatter):
         record.white_asctime = f"\033[37m{self.formatTime(record, self.datefmt)}\033[0m"
         return super().format(record)
 
+class SafeColoredFormatter(CustomColoredFormatter):
+    def format(self, record):
+        extras = {}
+        for k, v in record.__dict__.items():
+            if k not in (
+                'name', 'msg', 'args', 'levelname', 'levelno', 'pathname', 'filename',
+                'module', 'exc_info', 'exc_text', 'stack_info', 'lineno', 'funcName',
+                'created', 'msecs', 'relativeCreated', 'thread', 'threadName',
+                'processName', 'process', 'white_asctime', 'log_color'
+            ):
+                extras[k] = v
+        if extras:
+            record.extra = json.dumps(extras, ensure_ascii=False)
+        else:
+            record.extra = ""
+        return super().format(record)
+
 class JSONFormatter(logging.Formatter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
